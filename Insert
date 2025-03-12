@@ -1,0 +1,20 @@
+public static void AddUser(string userName, string password, string fullName, DateTime birthday, string address)
+    {
+        using (SqlConnection con = new SqlConnection(connectionString))
+        {
+            con.Open();
+            string query = "INSERT INTO Data_User (User_Name, User_Password, Full_Name, Birthday, Address) " +
+                           "VALUES (@userName, @password, @fullName, @birthday, @address)";
+
+            using (SqlCommand cmd = new SqlCommand(query, con))
+            {
+                cmd.Parameters.AddWithValue("@userName", userName);
+                cmd.Parameters.AddWithValue("@password", password);  // Cần mã hóa nếu dùng thực tế
+                cmd.Parameters.AddWithValue("@fullName", fullName);
+                cmd.Parameters.AddWithValue("@birthday", birthday);
+                cmd.Parameters.AddWithValue("@address", address);
+
+                cmd.ExecuteNonQuery();
+            }
+        }
+    }
