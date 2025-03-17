@@ -1,0 +1,21 @@
+CREATE TABLE Data_User (
+    User_Serial_Key INT IDENTITY(1,1) PRIMARY KEY,
+    User_Name NVARCHAR(50) NOT NULL UNIQUE,
+    User_Password NVARCHAR(255) NOT NULL,
+    Full_Name NVARCHAR(100),
+    Birthday DATE,
+    Address NVARCHAR(255)
+);
+GO
+INSERT INTO Data_User (User_Name, User_Password, Full_Name, Birthday, Address)
+VALUES 
+('john_doe', '123456', 'John Doe', '1990-05-12', '123 Main St, New York'),
+('jane_smith', 'abcdef', 'Jane Smith', '1985-08-23', '456 Elm St, California'),
+('michael_jones', 'qwerty', 'Michael Jones', '1992-03-15', '789 Oak St, Texas'),
+('emily_white', 'pass123', 'Emily White', '1988-07-30', '567 Pine St, Florida'),
+('david_brown', 'letmein', 'David Brown', '1995-09-10', '345 Maple St, Washington'),
+('sarah_wilson', 'welcome', 'Sarah Wilson', '1983-11-25', '901 Cedar St, Illinois'),
+('chris_taylor', 'admin123', 'Chris Taylor', '1991-06-17', '234 Birch St, Arizona'),
+('amanda_moore', 'securepw', 'Amanda Moore', '1994-02-09', '678 Walnut St, Colorado'),
+('robert_miller', 'mypass', 'Robert Miller', '1987-12-14', '890 Spruce St, Nevada'),
+('olivia_clark', 'randompw', 'Olivia Clark', '1993-04-28', '123 Aspen St, Georgia');

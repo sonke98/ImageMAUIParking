@@ -1,0 +1,37 @@
+private void Get_Data_User()
+{
+    using (SqlConnection conn = new SqlConnection("Server=YOUR_SERVER;Database=MyDatabase;Trusted_Connection=True;"))
+    {
+        conn.Open();
+        string sql = @"SELECT * FROM Data_User ORDER BY Birthday DESC";
+        
+        using (SqlCommand cmd = new SqlCommand(sql, conn))
+        {
+            if (cmd.ExecuteNonQuery() == null)
+            {
+                MessageBox.Show("<<<<<<<<<<<Vui lòng kiểm tra kết nối!>>>>>>>>>>>");
+            }
+
+            using (SqlDataReader reader = cmd.ExecuteReader())
+            {
+                dgvUser.Rows.Clear();
+                int stt = 1;
+
+                while (reader.Read())
+                {
+                    dgvUser.Rows.Add(new object[]
+                    {
+                        stt,
+                        reader["User_Serial_Key"].ToString(),
+                        reader["User_Name"].ToString(),
+                        reader["User_Password"].ToString(),
+                        reader["Full_Name"].ToString(),
+                        reader["Birthday"].ToString(),
+                        reader["Address"].ToString()
+                    });
+                    stt++;
+                }
+            }
+        }
+    }
+}

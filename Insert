@@ -1,0 +1,68 @@
+public static void AddUser(string userName, string password, string fullName, DateTime birthday, string address)
+    {
+        using (SqlConnection con = new SqlConnection(connectionString))
+        {
+            con.Open();
+            string query = "INSERT INTO Data_User (User_Name, User_Password, Full_Name, Birthday, Address) " +
+                           "VALUES (@userName, @password, @fullName, @birthday, @address)";
+
+            using (SqlCommand cmd = new SqlCommand(query, con))
+            {
+                cmd.Parameters.AddWithValue("@userName", userName);
+                cmd.Parameters.AddWithValue("@password", password);  // Cần mã hóa nếu dùng thực tế
+                cmd.Parameters.AddWithValue("@fullName", fullName);
+                cmd.Parameters.AddWithValue("@birthday", birthday);
+                cmd.Parameters.AddWithValue("@address", address);
+
+                cmd.ExecuteNonQuery();
+            }
+        }
+    }
+
+public static void UpdateUser(int userId, string userName, string password, string fullName, DateTime birthday, string address)
+    {
+        using (SqlConnection con = new SqlConnection(connectionString))
+        {
+            con.Open();
+            string query = "UPDATE Data_User " +
+                           "SET User_Name = @userName, User_Password = @password, Full_Name = @fullName, " +
+                           "Birthday = @birthday, Address = @address " +
+                           "WHERE User_Serial_Key = @userId";
+
+            using (SqlCommand cmd = new SqlCommand(query, con))
+            {
+                cmd.Parameters.AddWithValue("@userId", userId);
+                cmd.Parameters.AddWithValue("@userName", userName);
+                cmd.Parameters.AddWithValue("@password", password);  // Cần hash mật khẩu nếu dùng thực tế
+                cmd.Parameters.AddWithValue("@fullName", fullName);
+                cmd.Parameters.AddWithValue("@birthday", birthday);
+                cmd.Parameters.AddWithValue("@address", address);
+
+                int rowsAffected = cmd.ExecuteNonQuery();
+                if (rowsAffected > 0)
+                    Console.WriteLine("User updated successfully!");
+                else
+                    Console.WriteLine("User not found.");
+            }
+        }
+    }
+
+public static void DeleteUser(int userId)
+    {
+        using (SqlConnection con = new SqlConnection(connectionString))
+        {
+            con.Open();
+            string query = "DELETE FROM Data_User WHERE User_Serial_Key = @userId";
+
+            using (SqlCommand cmd = new SqlCommand(query, con))
+            {
+                cmd.Parameters.AddWithValue("@userId", userId);
+
+                int rowsAffected = cmd.ExecuteNonQuery();
+                if (rowsAffected > 0)
+                    Console.WriteLine("User deleted successfully!");
+                else
+                    Console.WriteLine("User not found.");
+            }
+        }
+    }
